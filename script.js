@@ -2,7 +2,7 @@
   // Configuración inicial
   const CANTIDAD_LETRAS = 26;
   const LETRAS = Array.from({ length: CANTIDAD_LETRAS }, (_, i) => String.fromCharCode(65 + i));
-  const TIEMPO_INICIAL = 150; // 2 minutos y medio
+  const TIEMPO_INICIAL = 240; // 2 minutos y medio
 
   // Referencias centralizadas del DOM
   const dom = {
