@@ -39,21 +39,21 @@
 }
 
 html, body {
-  height: 100%;
+  height: 100vh;
+  height: 100dvh; /* Altura dinámica real en celulares (evita que la barra del navegador corte contenido) */
   margin: 0;
   background: var(--bg);
   color: var(--text);
   font-family: "Space Grotesk", system-ui, sans-serif;
+  overflow: hidden; /* Evita por completo el scroll */
 }
 
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  overflow: auto;
-  padding: 14px 16px 16px;
-  gap: 8px;
+  padding: 8px 12px; /* Redujimos un poco el padding vertical */
+  gap: 6px;          /* Menos espacio entre elementos para ganar lugar */
 }
 
 /* --- Layout Principal --- */

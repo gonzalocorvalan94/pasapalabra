@@ -39,12 +39,13 @@
   // --- Dimensionamiento Responsivo ---
   const ajustarTamano = () => {
     const rect = dom.zonaCirculo.getBoundingClientRect();
-    const disponible = Math.min(rect.width, rect.height) - 12;
-    const size = Math.max(220, Math.min(disponible, 560));
+    // Ajustamos el espacio restando un poquito más para asegurar que respire en celulares
+    const disponible = Math.min(rect.width, rect.height) - 8;
+    const size = Math.max(200, Math.min(disponible, 520));
 
     dom.raiz.setProperty("--rosco-size", `${size}px`);
-    dom.raiz.setProperty("--letra", `${Math.round(size * 0.10)}px`);
-    dom.raiz.setProperty("--buffer", `${Math.round(size * 0.03)}px`);
+    dom.raiz.setProperty("--letra", `${Math.round(size * 0.095)}px`);
+    dom.raiz.setProperty("--buffer", `${Math.round(size * 0.025)}px`);
   };
 
   dom.roscoWrap.style.setProperty("--n", LETRAS.length);
