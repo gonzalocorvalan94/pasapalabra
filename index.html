@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Pasapalabra</title>
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="cabecera">
+    <div class="marca">
+      <img class="logo-colegio" src="logo.png" alt="Colegio de la Sierra">
+      <h1 class="titulo">Pasapalabra</h1>
+    </div>
+    <div class="marcador" aria-label="Marcador de juego" aria-live="polite">
+      <div>Correctas <span class="n-correcta">0</span></div>
+      <div>Incorrectas <span class="n-incorrecta">0</span></div>
+      <div>Restantes <span class="n-restantes">26</span></div>
+    </div>
+  </header>
+
+  <main class="juego-container">
+    <section class="barra-tiempo" aria-label="Control de tiempo">
+      <div class="tiempo" aria-live="off">
+        <span class="tiempo-label">Tiempo</span>
+        <span class="tiempo-valor">--:--</span>
+      </div>
+      <button type="button" class="btn-tiempo" data-accion="alternar-tiempo">Iniciar juego</button>
+    </section>
+
+    <section class="zona-circulo" aria-label="Tablero del rosco">
+      <div class="rosco-wrap">
+        <div class="rosco" aria-hidden="true"></div>
+        <div class="centro">
+          <div class="letra-actual" aria-live="assertive"></div>
+          <div class="estado"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="controles" aria-label="Acciones de juego">
+      <div class="fila-principal">
+        <button type="button" class="btn-correcta" data-accion="correcta">Correcta</button>
+        <button type="button" class="btn-pasapalabra" data-accion="pasapalabra">Pasapalabra</button>
+        <button type="button" class="btn-incorrecta" data-accion="incorrecta">Incorrecta</button>
+      </div>
+      <button type="button" class="btn-reiniciar" data-accion="reiniciar">Reiniciar rosco</button>
+    </section>
+  </main>
+
+  <dialog class="overlay" id="overlay" aria-labelledby="final-titulo">
+    <div class="panel-final">
+      <h2 id="final-titulo">Rosco terminado</h2>
+      <div class="resumen">
+        <div class="r-correcta">Correctas <b id="final-correcta">0</b></div>
+        <div class="r-incorrecta">Incorrectas <b id="final-incorrecta">0</b></div>
+      </div>
+      <button type="button" class="btn-reiniciar btn-reiniciar--modal" data-accion="reiniciar">Jugar de nuevo</button>
+    </div>
+  </dialog>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

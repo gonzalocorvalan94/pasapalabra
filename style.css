@@ -1,0 +1,326 @@
+:root {
+  --rosco-size: 420px;
+  --letra: 42px;
+  --buffer: 18px;
+  --radius: calc(var(--rosco-size) / 2 - (var(--letra) / 2) - var(--buffer));
+
+  --bg: #fbf7ee;
+  --bg-panel: #ffffff;
+  --line: #e3ddcd;
+  --text: #2c2a26;
+  --text-dim: #8a8478;
+
+  --pendiente-bg: #eaf1fb;
+  --pendiente-border: #a9c6ea;
+  --pendiente-text: #2f5d92;
+
+  --correcta: #1f7a34;
+  --correcta-bg: #dff5e1;
+  --correcta-border: #43b75d;
+
+  --incorrecta: #c23327;
+  --incorrecta-bg: #fde3e1;
+  --incorrecta-border: #e6564a;
+
+  --pasapalabra: #9a6b0a;
+  --pasapalabra-bg: #fff2cf;
+  --pasapalabra-border: #f0b429;
+
+  --actual: #2c2a26;
+
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  overflow: auto;
+  padding: 14px 16px 16px;
+  gap: 8px;
+}
+
+/* --- Layout Principal --- */
+.cabecera {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  align-items: center; /* Alineación vertical perfecta */
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-colegio {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.titulo {
+  font-size: clamp(18px, 2.4vw, 24px);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.marcador {
+  display: flex;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.marcador span { font-weight: 600; }
+.marcador .n-correcta { color: var(--correcta); }
+.marcador .n-incorrecta { color: var(--incorrecta); }
+.marcador .n-restantes { color: var(--text); }
+
+.juego-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 8px;
+}
+
+.barra-tiempo {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tiempo {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.tiempo-label {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.tiempo-valor {
+  font-size: 28px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.tiempo-valor.urgente {
+  color: var(--incorrecta-border);
+}
+
+.btn-tiempo {
+  background: var(--actual);
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+
+/* --- Tablero del Rosco --- */
+.zona-circulo {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.rosco-wrap {
+  position: relative;
+  width: var(--rosco-size);
+  height: var(--rosco-size);
+}
+
+.rosco {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.letra {
+  --angle: calc(360deg / var(--n) * var(--i) - 90deg);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--letra);
+  height: var(--letra);
+  margin: calc(var(--letra) / -2);
+  transform: rotate(var(--angle)) translate(var(--radius)) rotate(calc(-1 * var(--angle)));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--pendiente-bg);
+  border: 2px solid var(--pendiente-border);
+  color: var(--pendiente-text);
+  font-size: calc(var(--letra) * 0.36);
+  font-weight: 600;
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .15s ease;
+}
+
+.letra.correcta { background: var(--correcta-bg); border-color: var(--correcta-border); color: var(--correcta); }
+.letra.incorrecta { background: var(--incorrecta-bg); border-color: var(--incorrecta-border); color: var(--incorrecta); }
+.letra.pasapalabra { background: var(--pasapalabra-bg); border-color: var(--pasapalabra-border); color: var(--pasapalabra); }
+.letra.actual {
+  box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 4px var(--actual);
+  z-index: 2;
+}
+
+.centro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.centro .letra-actual {
+  font-size: clamp(32px, calc(var(--rosco-size) * 0.11), 64px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+}
+
+.centro .estado {
+  font-size: 13px;
+  color: var(--text-dim);
+  min-height: 16px;
+}
+
+/* --- Controles de juego --- */
+.controles {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 460px;
+}
+
+.fila-principal {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+button {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 13px 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  /* Mejora: outline sutil para accesibilidad por teclado */
+  outline: none;
+  transition: filter .15s ease, transform .1s ease, opacity .15s ease, box-shadow .15s ease;
+}
+
+button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(44, 42, 38, 0.3);
+}
+
+button:active { transform: translateY(1px); }
+button:disabled { opacity: .4; cursor: default; }
+button:not(:disabled):hover { filter: brightness(1.06); }
+
+.btn-correcta { background: var(--correcta-border); color: #ffffff; }
+.btn-incorrecta { background: var(--incorrecta-border); color: #ffffff; }
+.btn-pasapalabra { background: var(--pasapalabra-border); color: #4a3600; }
+
+.btn-reiniciar {
+  background: var(--bg-panel);
+  color: var(--text-dim);
+  border: 1px solid var(--line) !important;
+  font-size: 13px;
+  padding: 7px 18px;
+  border-radius: 8px;
+}
+
+.btn-reiniciar--modal {
+  border-color: var(--actual) !important;
+  color: var(--actual);
+}
+
+/* --- Modal final (<dialog class="overlay">) --- */
+dialog.overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 20px;
+  border: none;
+  background: rgba(44, 42, 38, .45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+dialog.overlay.visible {
+  display: flex;
+}
+
+.panel-final {
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 28px 30px;
+  text-align: center;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(44, 42, 38, .15);
+}
+
+.panel-final h2 { margin: 0 0 14px; font-size: 20px; }
+.panel-final .resumen { display: flex; justify-content: center; gap: 18px; margin-bottom: 20px; font-size: 14px; color: var(--text-dim); }
+.panel-final .resumen b { display: block; font-size: 20px; }
+.panel-final .resumen .r-correcta b { color: var(--correcta); }
+.panel-final .resumen .r-incorrecta b { color: var(--incorrecta); }
